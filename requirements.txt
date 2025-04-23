@@ -2,11 +2,8 @@ streamlit>=1.28.0
 psycopg2-binary
 pandas
 python-dotenv
-langchain
-langchain-google-genai
 chromadb
 google-generativeai>=0.3.0
-tqdm   
-langchain-core  
+pysqlite3-binary
+numpy
 langchain-community
-sentence-transformers>=2.2.2

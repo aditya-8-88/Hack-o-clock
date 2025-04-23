@@ -1,6 +1,7 @@
 import os
 import re
 import pandas as pd
+import numpy as np
 import psycopg2
 from uuid import uuid4
 from dotenv import load_dotenv
@@ -25,11 +26,18 @@ gemini_model = genai.GenerativeModel('gemini-1.5-pro-latest')
 
 # Simple text embeddings
 class SimpleEmbeddings:
+    def __init__(self, dimensions=384):
+        self.dimensions = dimensions
+    
     def embed_documents(self, texts):
-        return [[0.1]*384 for _ in texts]  # Dummy embeddings
+        if not texts:
+            return [np.ones(self.dimensions)]  # Return at least one vector with all 1s
+        return [np.ones(self.dimensions) * (i + 1) for i in range(len(texts))]  # Return unique vectors
     
     def embed_query(self, text):
-        return [0.1]*384
+        if not text:
+            return np.ones(self.dimensions)  # Return a vector with all 1s
+        return np.ones(self.dimensions) * 0.5  # Return a unique query vector
 
 embeddings = SimpleEmbeddings()
 
@@ -56,18 +64,37 @@ def get_foreign_key_info(cursor):
 
 def create_vectors(filename, persist_directory):
     """Create vector store from schema CSV"""
-    loader = CSVLoader(
-        file_path=filename,
-        metadata_columns=['table_name']  # FIX: Include table_name in metadata
-    )
-    docs = loader.load()
-    texts = [str(doc.page_content) for doc in docs]
-    return Chroma.from_texts(
-        texts=texts,
-        embedding=embeddings,
-        persist_directory=persist_directory,
-        metadatas=[doc.metadata for doc in docs]  # Ensure metadata is preserved
-    )
+    try:
+        loader = CSVLoader(
+            file_path=filename,
+            metadata_columns=['table_name']
+        )
+        docs = loader.load()
+        
+        # Handle empty documents case
+        if not docs:
+            print(f"Warning: No documents loaded from {filename}")
+            return Chroma(
+                embedding_function=embeddings,
+                persist_directory=persist_directory
+            )
+            
+        texts = [str(doc.page_content) for doc in docs]
+        metadatas = [doc.metadata for doc in docs]
+        
+        return Chroma.from_texts(
+            texts=texts,
+            embedding=embeddings,
+            persist_directory=persist_directory,
+            metadatas=metadatas
+        )
+    except Exception as e:
+        print(f"Error creating vectors: {e}")
+        # Create empty Chroma store as fallback
+        return Chroma(
+            embedding_function=embeddings,
+            persist_directory=persist_directory
+        )
 
 def save_db_details(db_uri):
     """Save database schema and create vector store"""

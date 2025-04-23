@@ -56,5 +56,10 @@ Include/
 
 # Data files
 vectors/
+csvs/
 *.csv
 "@ > .
+
+# Python 3.11
+Python-3.11.9/
+Python-3.11.9.tgz
