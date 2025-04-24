@@ -63,3 +63,6 @@ csvs/
 # Python 3.11
 Python-3.11.9/
 Python-3.11.9.tgz
+
+# custom test files
+read.txt

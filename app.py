@@ -24,7 +24,7 @@ if 'metrics' not in st.session_state:
 
 # UI Setup
 st.set_page_config(page_title="Universal Database Assistant", layout="wide")
-st.title("PostgreSQL Chat Assistant")
+st.title("Smart SQL")
 
 # Database Connection
 with st.sidebar:
