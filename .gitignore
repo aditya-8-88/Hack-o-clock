@@ -24,7 +24,6 @@ PyTorch/
 *.swo
 
 # Data files
-*.csv
 vectors/
 *.bin
 *.index
@@ -57,8 +56,6 @@ Include/
 # Data files
 vectors/
 csvs/
-*.csv
-"@ > .
 
 # Python 3.11
 Python-3.11.9/
