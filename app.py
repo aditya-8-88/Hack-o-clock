@@ -23,8 +23,8 @@ if 'metrics' not in st.session_state:
     }
 
 # UI Setup
-st.set_page_config(page_title="Universal Database Assistant", layout="wide")
-st.title("Smart SQL")
+st.set_page_config(page_title="Database Assistant", layout="wide")
+# st.title("Smart SQL")
 
 # Database Connection
 with st.sidebar:
@@ -67,7 +67,7 @@ with st.sidebar:
             st.metric("Rows Returned", st.session_state.metrics['rows_returned'])
 
 # Chat Interface
-st.header("Chat with Your Database")
+st.header("Ask Your Database")
 
 # Display chat history
 for message in st.session_state.messages:
@@ -142,6 +142,7 @@ if prompt := st.chat_input("Ask about your data..."):
     with st.chat_message("assistant"):
         if isinstance(response, dict):
             if response["type"] == "dataframe":
+                print(response["data"])
                 st.dataframe(response["data"])
                 with st.expander("View SQL Query & Metrics"):
                     tab1, tab2 = st.tabs(["SQL Query", "Performance"])
@@ -168,3 +169,32 @@ if prompt := st.chat_input("Ask about your data..."):
         "role": "assistant", 
         "content": response
     })
+
+def describe_data_with_gemini(data):
+    """Generate a description of the data using Gemini API."""
+    if data.empty:
+        return "The dataset is empty. Please provide a valid dataset."
+
+    # Convert DataFrame to a string representation
+    data_preview = data.head(5).to_string(index=False)
+
+    # Create a prompt for Gemini
+    prompt = f"""
+    You are a data analyst. Analyze the following dataset and provide a brief description:
+    
+    Dataset Preview:
+    {data_preview}
+    
+    Include details about:
+    1. The type of data (e.g., sales, customer, product, etc.).
+    2. Key columns and their significance.
+    3. Any patterns or insights you can infer from the preview.
+    """
+
+    try:
+        response = gemini_model.generate_content(prompt)
+        if not response.text:
+            raise ValueError("Empty response from Gemini")
+        return response.text.strip()
+    except Exception as e:
+        return f"Error generating description: {str(e)}"

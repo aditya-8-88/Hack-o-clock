@@ -132,17 +132,22 @@ def generate_sql(query, schema_info, foreign_keys):
     Rules:
     1. Use proper JOINs based on foreign keys
     2. Only select necessary columns
-    3. Format SQL between ```sql markers
-    4. Add comments for complex logic
-    
-    Respond ONLY with the SQL query:"""
-    
+    3. Add comments for complex logic
+    4. Use CTEs for complex queries
+    5. Avoid using SELECT * to prevent performance issues
+    6. Use LIMIT 100 for large result sets
+    7. Use ORDER BY for sorting results
+
+    Respond ONLY with the SQL query
+    """
+
     try:
         response = gemini_model.generate_content(prompt)
         if not response.text:
             raise ValueError("Empty response from Gemini")
         
         # Extract SQL from response
+        # print(f"Response from Gemini: {response.text}")
         sql_match = re.search(r"```sql\n(.*?)\n```", response.text, re.DOTALL)
         if not sql_match:
             return {

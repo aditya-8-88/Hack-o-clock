@@ -16,3 +16,6 @@ sudo make altinstall  # Use altinstall to avoid overwriting system python
 /usr/local/bin/python3.11 -m venv venv
 source venv/bin/activate
 ```
+
+
+postgresql://cohort_owner:t5TKWuPm3FMZ@ep-winter-poetry-a57jcanb-pooler.us-east-2.aws.neon.tech/cohort?sslmode=require

@@ -22,3 +22,15 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO custom_user;
 -- Step 4: Ensure future tables also grant SELECT to this user
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT SELECT ON TABLES TO custom_user;
+
+
+
+using api key = AIzaSyAoGaX5ElfMd_Zcjw6zBiAXmwntAPj3Ngc
+unused api key = AIzaSyCwzXtNoYcHgK4VS3gMVNbTxwsUPBht6O0
+
+
+give me phone numbers of top 5 sale making assests
+also write their total sales in descending order
+
+
+Business model = B2B

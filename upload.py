@@ -10,7 +10,7 @@ except UnicodeDecodeError:
     df = pd.read_csv(csv_path, encoding='ISO-8859-1')  # Fallback encoding
 
 # Step 2: Neon connection string
-connection_string = "postgresql://neondb_owner:npg_qjT4LpwKoUF9@ep-royal-dawn-a4sqbgod-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+connection_string = "postgresql://cohort_owner:t5TKWuPm3FMZ@ep-winter-poetry-a57jcanb-pooler.us-east-2.aws.neon.tech/cohort?sslmode=require"
 
 # Step 3: Create database engine
 engine = create_engine(connection_string)
