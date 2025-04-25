@@ -7,3 +7,4 @@ google-generativeai>=0.3.0
 pysqlite3-binary
 numpy
 langchain-community
+altair

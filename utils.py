@@ -291,3 +291,27 @@ def get_the_output_from_llm(query, unique_id, db_uri):
                 "query_complexity": "low"
             }
         }
+
+
+
+
+def explain_chart(df: pd.DataFrame, x_col: str, y_col: str, chart_type: str) -> str:
+    """
+    Ask Gemini to explain the chart in very simple bullet points.
+    """
+    sample = df[[x_col,y_col]].head(5).to_dict(orient='records')
+    prompt = f"""
+You are a helpful assistant.
+Explain this {chart_type} chart in simple bullet points:
+- X axis: {x_col}
+- Y axis: {y_col}
+- Sample points: {sample}
+
+Write:
+• This chart shows…
+• On the horizontal axis…
+• On the vertical axis…
+• The trend might be because…
+"""
+    resp = gemini_model.generate_content(prompt)
+    return resp.text.strip()        
