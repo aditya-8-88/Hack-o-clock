@@ -1,4 +1,4 @@
-# PostgreSQL Chat Assistant with Gemini AI
+# Smart Database Access
 
 A Streamlit-powered AI assistant that converts natural language queries into SQL using Google's Gemini AI, executes them on PostgreSQL databases, and displays results with rich visualizations and performance metrics.
 
