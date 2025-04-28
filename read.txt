@@ -1,5 +1,6 @@
 postgresql://custom_user:custom_user!@#$%^&*()@ep-royal-dawn-a4sqbgod-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
 
+postgresql://custom_user:cust%21%40%23%24%25%5E%26%2A%28om_user@ep-winter-poetry-a57jcanb-pooler.us-east-2.aws.neon.tech/cohort?sslmode=require
 
 
 /*

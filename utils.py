@@ -119,7 +119,7 @@ def save_db_details(db_uri):
 
 def generate_sql(query, schema_info, foreign_keys):
     """Generate SQL using Gemini with dynamic schema"""
-    prompt = f"""You are a PostgreSQL expert. Generate SQL for this database:
+    prompt = f"""You are a PostgreSQL expert. Generate SQL for this database if and only if user's message is understandable.:
     
     Database Schema:
     {schema_info}
