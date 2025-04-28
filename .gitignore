@@ -64,3 +64,5 @@ Python-3.11.9.tgz
 # custom test files
 .env
 read.txt
+upload.py
+Helper.md
